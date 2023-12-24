@@ -35,4 +35,4 @@ testDbConnection();
 
 
 
-module.exports = { sq: sequelize, testDbConnection };
+module.exports = { db: sequelize, testDbConnection };
