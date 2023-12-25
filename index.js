@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const port = 8000;
 require('./app');
-const { db } = require('./config/db')
+const { db } = require('./models/index')
 const graphql = require('graphql');
 const {GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList} = graphql;
 const {graphqlHTTP} = require('express-graphql');
+const { user } = require('pg/lib/defaults');
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -27,12 +28,23 @@ const RootQuery = new GraphQLObjectType({
             type : new GraphQLList(UserType),
             args : { id : { type : GraphQLInt }},
             async resolve(parent, args){
-                return await db.query(`select * from users`, {
-                    type: db.QueryTypes.SELECT,
-                    raw: true      
+                // return await db.query(`select * from users`, {
+                //     type: db.QueryTypes.SELECT,
+                //     raw: true      
+                // });
+                return await user.findAll({
+                    where : {id:1}
                 });
+
             }
         }
+        // getDetails : {
+        //     return await db.query(`select * from users where id = :id`, {
+        //         type: db.QueryTypes.SELECT,
+        //         replacements: args,
+        //         raw: true      
+        //     });
+        // }
     }
 });
 // const Mutation = "mutation";
@@ -47,8 +59,9 @@ const Mutation = new GraphQLObjectType({
                 email : { type : GraphQLString }
             },
             resolve(parent, args){
-                db.query("INSERT INTO users(username, email)VALUES ('arya', 'arya@gmail.com')");
-                return args;
+                // db.query("INSERT INTO users(username, email)VALUES ('arya', 'arya@gmail.com')");
+                // return args;
+
             }
 
         }

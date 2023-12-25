@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 require('dotenv').config();
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
 
+// create sequelize instance
 const sequelize = new Sequelize({
   database: PGDATABASE,
   username: PGUSER,
@@ -21,11 +22,11 @@ const testDbConnection = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    let data = await sequelize.query(`select * from users`, {
-      type: sequelize.QueryTypes.SELECT,
-      raw: true
-    });
-    console.log(data);
+    // let data = await sequelize.query(`select * from users`, {
+    //   type: sequelize.QueryTypes.SELECT,
+    //   raw: true
+    // });
+    // console.log(data);
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
