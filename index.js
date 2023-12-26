@@ -6,10 +6,15 @@ const { db } = require('./config/db')
 const graphql = require('graphql');
 const {GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList} = graphql;
 const {graphqlHTTP} = require('express-graphql');
+const Route = require('./routes/routes');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
+
+
+app.use("/", Route);
+
 
 const UserType = new GraphQLObjectType({
     name : "User",
