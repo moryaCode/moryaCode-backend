@@ -1,12 +1,10 @@
-const express = require('express');
+import express from 'express';
 const app = express();
 const port = 8000;
-require('./app');
-const { db } = require('./models/index')
-const graphql = require('graphql');
-const {GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList} = graphql;
-const {graphqlHTTP} = require('express-graphql');
-const { user } = require('pg/lib/defaults');
+import { graphql } from 'graphql';
+import {GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList} from  'graphql';
+import {graphqlHTTP} from 'express-graphql';
+import * as Users from './src/models/index.js';
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -32,7 +30,7 @@ const RootQuery = new GraphQLObjectType({
                 //     type: db.QueryTypes.SELECT,
                 //     raw: true      
                 // });
-                return await user.findAll({
+                return await Users.findAll({
                     where : {id:1}
                 });
 

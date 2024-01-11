@@ -1,6 +1,7 @@
-const { Sequelize } = require("sequelize");
-require('dotenv').config();
+import {Sequelize} from "sequelize";
+import dotenv from 'dotenv';
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
+dotenv.config();
 
 // create sequelize instance
 const sequelize = new Sequelize({
@@ -36,4 +37,4 @@ testDbConnection();
 
 
 
-module.exports = { db: sequelize, testDbConnection };
+export { sequelize, testDbConnection };

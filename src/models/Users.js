@@ -1,11 +1,10 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const { sequelize } = require('../config/db.js')
-
-class User extends Model {}
+import { sequelize } from '../config/db';
+class User extends Model { }
 
 User.init({
   // Model attributes are defined here
-  firstName: {
+  userName: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -16,7 +15,7 @@ User.init({
 }, {
   // Other model options go here
   sequelize, // We need to pass the connection instance
-  modelName: 'User' ,
+  modelName: 'User',
   tableName: 'users'// We need to choose the model name
 });
 

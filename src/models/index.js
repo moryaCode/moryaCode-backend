@@ -1,11 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-const sequelize = require('../config/db');
-const {Sequelize, DataTypes} = require('sequelize');
+ import * as fs from 'fs';
+import * as path from 'path';
+import { sequelize } from '../../config/db.js';
+import * as Sequelize  from 'sequelize';
 
 const db = {}
 db.Sequelize = Sequelize;
 db.sequelize =sequelize;
+
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+// 👇️ "/home/john/Desktop/javascript"
+const __dirname = path.dirname(__filename);
 
 // db.Users = require('./Users')(sequelize,DataTypes);
 
@@ -15,7 +22,7 @@ fs.readdirSync(__dirname)
 
   .filter(file => (file.indexOf('.') !== 0) && (file !== 'index.js'))
   .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
+    const model =  require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     // Import the model from the file and associate it with Sequelize
     db.models[model.name] = model;
     // Add the imported model to the 'db' object under its name
@@ -29,4 +36,4 @@ Object.keys(db.models)
     }
   });
 
-module.exports  = db;
+export {db}
